@@ -4,6 +4,7 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.WebDriver;
@@ -11,6 +12,7 @@ import org.openqa.selenium.By;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,11 +20,16 @@ import java.net.URL;
 
 public class BarCodeValidation {
     WebDriver driver;
-    @Test
-    public void TestBarcode() throws IOException, NotFoundException, InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "/Users/mali4/Documents/gitRepo/CMP-Automation/cmp-legacy/src/test/resources/webdrivers/chromedriver/MacChromedriver");
+
+    @BeforeTest
+    public void setUp()
+    {
+        System.setProperty("webdriver.chrome.driver", "../webdrivers/chromedriver/MacChromedriver");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+    }
+    public void TestBarcode() throws IOException, NotFoundException, InterruptedException {
+
         driver.get("https://www.scandit.com/barcode-generator/");
 
         //Select code type
@@ -39,7 +46,7 @@ public class BarCodeValidation {
 
         //get barcode source url
         String barCodeURL = driver.findElement(By.xpath("//div[@id = 'result']/img")).getAttribute("src");
-       
+
         System.out.println(barCodeURL);
 
         //convert url to image
@@ -53,11 +60,13 @@ public class BarCodeValidation {
         //decoding image
         Result result = new MultiFormatReader().decode(binaryBitmap);
         System.out.println(result.getText());
-        Assert.assertEquals();
+        Assert.assertEquals(result, "Temp Here", "Not matching");
     }
+
     @AfterTest
     public void tearDown()
     {
         driver.quit();
     }
+
 }
