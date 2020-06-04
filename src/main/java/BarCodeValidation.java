@@ -20,7 +20,7 @@ public class BarCodeValidation {
     WebDriver driver;
     @Test
     public void TestBarcode() throws IOException, NotFoundException, InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "/Users/mali4/Documents/gitRepo/CMP-Automation/cmp-legacy/src/test/resources/webdrivers/chromedriver/MacChromedriver");
+        System.setProperty("webdriver.chrome.driver", "../webdrivers/chromedriver/MacChromedriver");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.get("https://www.scandit.com/barcode-generator/");
